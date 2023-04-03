@@ -1,3 +1,5 @@
+# 제출기준 백준 java 1등 ㅎㅎ
+
 # [Silver III] 안테나 - 18310 
 
 [문제 링크](https://www.acmicpc.net/problem/18310) 
