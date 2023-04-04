@@ -1,3 +1,5 @@
+// 이전코드 if else 구문 스위치로 변경
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.StringTokenizer;
@@ -26,7 +28,8 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			path = true;
 			for (int j = 0; j < N-1; j++) {
-				if(board[i][j] == board[i][j+1]+1) { // 다음 칸이 한 칸 아래면
+				switch (board[i][j] - board[i][j+1]) {
+				case 1:
 					for (int k = 0; k < L; k++) { // 경사로 만큼
 						// 범위가 넘어가거나 경사로를 다 세우기 전에 높이가 변하면 실패
 						if(j+1 + k >= N || board[i][j+1] != board[i][j+1 + k]) {
@@ -34,7 +37,8 @@ public class Main {
 							break;
 						}
 					}
-				} else if(board[i][j] == board[i][j+1]-1) { // 다음칸이 한 칸 위면
+					break;
+				case -1:
 					for (int k = 0; k < 2*L; k++) { // 경사로 길이 두배만큼
 						if(j-k >= 0 && board[i][j] == board[i][j-k]-1) { // 나보다 한칸 높았다면? 슬로프가 있을테니까
 							path = false; // 지나가기 실패
@@ -49,12 +53,12 @@ public class Main {
 							break;
 						}
 					}
-				} else if(board[i][j] == board[i][j+1]) {
-					continue; // 같으면 개꿀
-				} else { // 두칸 이상 차이면
-					path = false; // 못지나가
+				case 0: 
+					break;
+				default:
+					path = false;
+					break;
 				}
-				
 				if(!path) break;
 			}
 			if(path) res++;
@@ -63,7 +67,8 @@ public class Main {
 		for (int i = 0; i < N; i++) {
 			path = true;
 			for (int j = 0; j < N-1; j++) {
-				if(board[j][i] == board[j+1][i]+1) { // 다음 칸이 한 칸 아래면
+				switch (board[j][i] - board[j+1][i]) {
+				case 1:
 					for (int k = 0; k < L; k++) { // 경사로 만큼
 						// 범위가 넘어가거나 경사로를 다 세우기 전에 높이가 변하면 실패
 						if(j+1 + k >= N || board[j+1][i] != board[j+1 + k][i]) {
@@ -71,7 +76,8 @@ public class Main {
 							break;
 						}
 					}
-				} else if(board[j][i] == board[j+1][i]-1) { // 다음칸이 한 칸 위면
+					break;
+				case -1:
 					for (int k = 0; k < 2*L; k++) { // 경사로 길이 두배만큼
 						if(j-k >= 0 && board[j][i] == board[j-k][i]-1) { // 나보다 한칸 높았다면? 슬로프가 있을테니까
 							path = false; // 지나가기 실패
@@ -86,12 +92,12 @@ public class Main {
 							break;
 						}
 					}
-				} else if(board[j][i] == board[j+1][i]) {
-					continue; // 같으면 개꿀
-				} else { // 두칸 이상 차이면
-					path = false; // 못지나가
+				case 0: 
+					break;
+				default:
+					path = false;
+					break;
 				}
-				
 				if(!path) break;
 			}
 			if(path) res++;
