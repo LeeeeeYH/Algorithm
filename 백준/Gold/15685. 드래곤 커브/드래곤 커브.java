@@ -7,7 +7,6 @@ public class Main {
 	static final int[][] dir = {{1,0},{0,-1},{-1,0},{0,1}};
 	static boolean[][] board = new boolean[101][101];
 	static ArrayList<int[]> curve; // 드래곤 커브 [좌표번호][x,y]
-	static int g; // 세대, 좌표 개수 == (2^(g+1))
 	
 	public static void main(String[] args) throws Exception {
 		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
