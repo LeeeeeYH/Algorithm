@@ -3,17 +3,17 @@ input = sys.stdin.readline
 
 N, S = map(int, input().split())
 nums = list(map(int, input().split()))
-
 res = 0
-def recur(cur, num):
-    global res
+
+def recur(cur, summ, check):
     if cur == N:
-        if num == S:
+        if check and summ == S:
+            global res
             res += 1
         return
 
-    recur(cur + 1, num + nums[cur])
-    recur(cur + 1, num)
+    recur(cur+1, summ + nums[cur], check|True)
+    recur(cur+1, summ, check)
 
-recur(0, 0)
-print(res - int(S==0))
+recur(0, 0, False)
+print(res)
