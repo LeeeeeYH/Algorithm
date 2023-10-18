@@ -2,27 +2,31 @@ import sys
 input = sys.stdin.readline
 
 k = int(input())
-eq = list(map(str, input().split()))
-maxnum, minnum = '0'*(k+1), '9'*(k+1)
+ls = list(map(str, input().split()))
+
+maxres, minres = 0, 10**(k+1)
 
 def recur(cur, num, check):
-    global maxnum, minnum
     if cur == k:
-        maxnum = max(maxnum, num)
-        minnum = min(minnum, num)
+        global maxres, minres
+        maxres = max(maxres, num)
+        minres = min(minres, num)
         return
 
-    if eq[cur] == '<':
-        for i in range(int(num[-1]) + 1, 10):
+    last = num%10
+    if ls[cur] == "<":
+        for i in range(last+1, 10):
             if not check & 1<<i:
-                recur(cur + 1, num + str(i), check | 1<<i)
-    else: # eq[cur] == '>':
-        for i in range(int(num[-1])):
+                recur(cur+1, num*10 + i, check | 1<<i)
+    else:
+        for i in range(last):
             if not check & 1<<i:
-                recur(cur + 1, num + str(i), check | 1<<i)
+                recur(cur+1, num*10 + i, check | 1<<i)
 
-for i in range(10):
-    recur(0, str(i), 1<<i)
+for j in range(10):
+    recur(0, j, 1<<j)
 
-print(maxnum)
-print(minnum)
+print(maxres)
+if minres // (10**k) == 0:
+    print(0, end="")
+print(minres)
