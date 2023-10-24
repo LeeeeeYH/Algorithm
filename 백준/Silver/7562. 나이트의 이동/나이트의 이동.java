@@ -2,16 +2,14 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayDeque;
-import java.util.LinkedList;
 import java.util.Queue;
 import java.util.StringTokenizer;
 
 class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringTokenizer st;
         StringBuilder sb = new StringBuilder();
-
-        int num = 0;
 
         int testCase = Integer.parseInt(br.readLine());
         int[] moveY = {-2, -1, 1, 2, 2, 1, -1, -2};
@@ -20,16 +18,21 @@ class Main {
         for(int t = 0; t < testCase; t++) {
             Queue<int[]> q = new ArrayDeque<>();
             int l = Integer.parseInt(br.readLine());
-            int[][] map = new int[l][l];
-            boolean[][] visited = new boolean[l][l];
+            boolean[][] visited = new boolean[l + 4][l + 4];
+            for(int i = 0; i < l+4; i++){
+                visited[i][0] = visited[i][1] = visited[i][l+2] = visited[i][l+3] = true;
+                visited[0][i] = visited[1][i] = visited[l+2][i] = visited[l+3][i] = true;
+            }
+
             int[] start = new int[2];
-            StringTokenizer st = new StringTokenizer(br.readLine());
-            start[0] = Integer.parseInt(st.nextToken());
-            start[1] = Integer.parseInt(st.nextToken());
+            st = new StringTokenizer(br.readLine());
+            start[0] = Integer.parseInt(st.nextToken()) + 2;
+            start[1] = Integer.parseInt(st.nextToken()) + 2;
             int[] end = new int[2];
             st = new StringTokenizer(br.readLine());
-            end[0] = Integer.parseInt(st.nextToken());
-            end[1] = Integer.parseInt(st.nextToken());
+            end[0] = Integer.parseInt(st.nextToken()) + 2;
+            end[1] = Integer.parseInt(st.nextToken()) + 2;
+            // 입력 끝
 
             q.offer(new int[] {start[0], start[1], 0});
             visited[start[0]][start[1]] = true;
@@ -45,9 +48,6 @@ class Main {
                 for(int i = 0; i < 8; i++) {
                     int nextY = curr[0] + moveY[i];
                     int nextX = curr[1] + moveX[i];
-
-                    if(nextY < 0 || nextY >= l) continue;
-                    if(nextX < 0 || nextX >= l) continue;
 
                     if (!visited[nextY][nextX]) {
                         visited[nextY][nextX] = true;
