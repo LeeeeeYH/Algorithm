@@ -2,14 +2,16 @@ import sys
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-ls = sorted(list(map(int, input().split())))
+inp = sorted(map(int, input().split()))
+num = [0] * M
 
-def recur(cur, start, nums):
+def recur(cur, start):
     if cur == M:
-        print(*nums)
+        print(*num)
         return
 
     for i in range(start, N):
-        recur(cur+1, i, nums+[ls[i]])
+        num[cur] = inp[i]
+        recur(cur + 1, i)
 
-recur(0, 0, [])
+recur(0, 0)
