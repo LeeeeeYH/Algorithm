@@ -2,19 +2,16 @@ import sys
 input = sys.stdin.readline
 
 k = int(input())
+limit = int(k**0.5)+1
+ls = []
 
-num = k
-i = 2
-M = int(k**0.5) + 1
+for i in range(2, int(k**0.5)+1):
+    while k % i == 0:
+        ls.append(i)
+        k //= i
 
-jews = []
-while i <= M:
-    if num % i == 0:
-        num //= i
-        jews.append(i)
-    else:
-        i += 1
-if num != 1:
-    jews.append(num)
-print(len(jews))
-print(*jews)
+if k != 1:
+    ls.append(k)
+
+print(len(ls))
+print(*ls)
