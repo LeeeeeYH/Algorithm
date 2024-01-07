@@ -1,25 +1,14 @@
 import sys
 input = sys.stdin.readline
 
-A, B = map(int, input().split())
+def gcd(x, y):
+    while y:
+        x, y = y, x%y
+    return x
 
-def gcd(a, b):
-    while a%b:
-        a, b = b, a%b
-    return b
-
-
-multi = A*B
-x = A
-res_a, res_b = 0, 0
-while True:
-    if x > multi/x:
-        break
-
-    if multi % x == 0:
-        y = multi // x
-        if gcd(x, y) == A:
-            res_a, res_b = x, y
-    x += 1
-
-print(res_a, res_b)
+m, M = map(int, input().split())
+gop = m*M
+for i in range(int(gop**0.5), m-1, -1):
+    if gop % i == 0 and gcd(i, gop//i) == m:
+        print(i, gop//i)
+        exit(0)
