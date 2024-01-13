@@ -1,18 +1,21 @@
 import sys
-from collections import defaultdict
 input = sys.stdin.readline
 
 N, K = map(int, input().split())
-A = list(map(int, input().split()))
-pre_dict = defaultdict(int)
-pre_dict[0] = 1
+ls = list(map(int, input().split()))
+have = dict()
+have[0] = 1
+summ = 0
+res = 0
 
-adding = 0
-count = 0
+for i in ls:
+    summ += i
+    if summ - K in have:
+        res += have[summ - K]
 
-for i in A:
-    adding += i
-    count += pre_dict[adding - K]
-    pre_dict[adding] += 1
+    if summ in have:
+        have[summ] += 1
+    else:
+        have[summ] = 1
 
-print(count)
+print(res)
