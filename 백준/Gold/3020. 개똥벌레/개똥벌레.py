@@ -2,23 +2,20 @@ import sys
 input = sys.stdin.readline
 
 N, H = map(int, input().split())
-wall = [0]*(H+1)
-wall[0] = N//2 # 1번째 높이의 장애물 수 == 석순 수 == N//2
-for i in range(N):
-    if i % 2 == 0: # 석순은 석순+1 높이부터 장애물이 없어짐
-        wall[int(input()) + 1] -= 1
-    else: # 종유석은 H - 종유석높이 + 1부터 장애물이 생김
-        wall[H - int(input()) + 1] += 1
+imos = [0] * H  # index 0 부터 비교했을때 이전 index보다 장애물이 몇개나 많아지거나 적어졌는가
 
-cur_wall = N//2
-min_wall, min_wall_N = N//2, 1 # 장애물의 최솟값, 최솟값인 갯수, 초기화는 석순개수(높이 1)
+for _ in range(N//2):
+    imos[H - int(input())] += 1
+    imos[int(input())] -= 1
 
-for i in range(2, H+1):
-    cur_wall += wall[i]
-    if min_wall > cur_wall:
-        min_wall = cur_wall
-        min_wall_N = 1
-    elif min_wall == cur_wall:
-        min_wall_N += 1
+summ = N//2
+res, resnum = summ, 1
+for i in range(1, H):
+    summ += imos[i]
+    if res > summ:
+        res = summ
+        resnum = 1
+    elif res == summ:
+        resnum += 1
 
-print(min_wall, min_wall_N)
+print(res, resnum)
