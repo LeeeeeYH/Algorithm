@@ -4,18 +4,17 @@ input = sys.stdin.readline
 N, M = map(int, input().split())
 A = list(map(int, input().split()))
 B = list(map(int, input().split()))
-hap = []
+
 i, j = 0, 0
-while i < N and j < M:
+while i<N and j<M:
     if A[i] < B[j]:
-        hap.append(A[i])
+        print(A[i], end=" ")
         i += 1
     else:
-        hap.append(B[j])
+        print(B[j], end=" ")
         j += 1
 
-if i == N:
-    hap += B[j:]
+if i<N:
+    print(*A[i:])
 else:
-    hap += A[i:]
-print(*hap)
+    print(*B[j:])
