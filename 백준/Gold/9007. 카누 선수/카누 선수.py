@@ -5,14 +5,14 @@ for _ in range(T):
     k, n = map(int, input().split())
     ls = [sorted(map(int, input().split())) for _ in range(4)]
 
-    A, B = set(), set()
+    A, B = [], []
     for i in range(n):
         for j in range(n):
-            A.add(ls[0][i]+ls[1][j])
-            B.add(ls[2][i]+ls[3][j])
+            A.append(ls[0][i]+ls[1][j])
+            B.append(ls[2][i]+ls[3][j])
 
-    A = sorted(list(A))
-    B = sorted(list(B))
+    A.sort()
+    B.sort()
 
     leng = len(A)
     j = len(B)-1
