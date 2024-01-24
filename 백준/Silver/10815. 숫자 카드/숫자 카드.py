@@ -2,20 +2,19 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-cards = sorted(list(map(int, input().split())))
+ls = sorted(map(int, input().split()))
 M = int(input())
-nums = list(map(int, input().split()))
-
-for num in nums:
-    i, j = 0, N-1
-    while i <= j:
-        mid = (i+j)//2
-        if cards[mid] < num:
-            i = mid + 1
-        elif cards[mid] > num:
-            j = mid - 1
-        else: # cards[mid] == num:
-            print(1, end=' ')
+quest = list(map(int, input().split()))
+for q in quest:
+    s, e = 0, N-1
+    res = 0
+    while s <= e:
+        m = (s+e)//2
+        if q > ls[m]:
+            s = m+1
+        elif q < ls[m]:
+            e = m-1
+        else:
+            res = 1
             break
-    else:
-        print(0, end=' ')
+    print(res, end=" ")
