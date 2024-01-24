@@ -2,31 +2,34 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-cards = sorted(list(map(int, input().split())))
+ls = sorted(map(int, input().split()))
 M = int(input())
-nums = list(map(int, input().split()))
+quest = list(map(int, input().split()))
+for q in quest:
+    s, e = 0, N-1
+    l, r = N, 0
+    found = False
+    # 왼쪽 구하기
+    while s <= e:
+        m = (s+e)//2
+        if q > ls[m]:
+            s = m+1
+        elif q < ls[m]:
+            e = m-1
+        else:
+            found = True
+            l = m
+            e = m-1
 
-for num in nums:
-    i, j = 0, N-1
-    left, right = N, -1
-    while i <= j:
-        mid = (i+j)//2
-        if cards[mid] < num:
-            i = mid + 1
-        elif cards[mid] > num:
-            j = mid - 1
-        else: # cards[mid] == num:
-            left = mid
-            j = mid - 1
-    i, j = 0, N-1
-    while i <= j:
-        mid = (i + j) // 2
-        if cards[mid] < num:
-            i = mid + 1
-        elif cards[mid] > num:
-            j = mid - 1
-        else: # cards[mid] == num:
-            right = mid
-            i = mid + 1
-
-    print(0 if left == N or right == -1 else right-left+1, end=' ')
+    s, e = 0, N-1
+    # 오른쪽 구하기
+    while s <= e:
+        m = (s+e)//2
+        if q > ls[m]:
+            s = m+1
+        elif q < ls[m]:
+            e = m-1
+        else:
+            r = m
+            s = m+1
+    print(r-l+1 if found else 0, end=" ")
