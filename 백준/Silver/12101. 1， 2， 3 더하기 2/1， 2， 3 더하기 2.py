@@ -2,20 +2,22 @@ import sys
 input = sys.stdin.readline
 
 n, k = map(int, input().split())
-cnt = 0
+res = [[0]]
 
-def recur(nums, sum):
-    if sum > n:
+def recur(ls, summ):
+    if summ > n:
         return
-    global cnt
-    if sum == n:
-        cnt += 1
-        if cnt == k:
-            print('+'.join(nums))
-            exit(0)
+    elif summ == n:
+        global res
+        res += [ls]
+        return
 
     for i in range(1, 4):
-        recur(nums+[str(i)], sum+i)
+        recur(ls + [i], summ+i)
 
 recur([], 0)
-print(-1)
+
+if k <= len(res):
+    print(*res[k], sep="+")
+else:
+    print(-1)
