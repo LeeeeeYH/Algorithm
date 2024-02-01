@@ -2,21 +2,21 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
+ls = [0]*N
 
-def check(num):
-    for i in range(1, len(num)//2+1):
-        if num[-i:] == num[-i-i:-i]:
+def check(leng):
+    for i in range(1, leng//2+1):
+        if ls[leng-i:leng] == ls[leng-i-i:leng-i]:
             return False
     return True
 
-def recur(cur, num):
+def recur(cur):
     if cur == N:
-        print(num)
+        print(*ls, sep="")
         exit(0)
 
     for i in range(1, 4):
-        nnum = num+str(i)
-        if check(nnum):
-            recur(cur+1, nnum)
-
-recur(0, '')
+        ls[cur] = i
+        if check(cur+1):
+            recur(cur+1)
+recur(0)
