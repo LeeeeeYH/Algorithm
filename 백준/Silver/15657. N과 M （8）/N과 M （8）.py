@@ -2,8 +2,8 @@ import sys
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
-inp = sorted(map(int, input().split()))
-num = [0] * M
+origin = sorted(map(int, input().split()))
+num = [0]*M
 
 def recur(cur, start):
     if cur == M:
@@ -11,7 +11,7 @@ def recur(cur, start):
         return
 
     for i in range(start, N):
-        num[cur] = inp[i]
+        num[cur] = origin[i]
         recur(cur + 1, i)
 
 recur(0, 0)
