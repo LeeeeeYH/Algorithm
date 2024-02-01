@@ -2,13 +2,15 @@ import sys
 input = sys.stdin.readline
 
 N, M = map(int, input().split())
+num = [0]*M
 
-def recur(cur, nums):
+def recur(cur):
     if cur == M:
-        print(*nums)
+        print(*num)
         return
 
     for i in range(1, N+1):
-        recur(cur+1, nums+[i])
+        num[cur] = i
+        recur(cur + 1)
 
-recur(0, [])
+recur(0)
