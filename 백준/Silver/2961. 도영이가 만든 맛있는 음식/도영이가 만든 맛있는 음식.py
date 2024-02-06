@@ -2,18 +2,18 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-ings = [list(map(int, input().split())) for _ in range(N)]
-res = 10**9
+ls = [list(map(int, input().split())) for _ in range(N)]
+res = 1_000_000_000
 
-def recur(cur, S_mul, B_sum, cnt):
+def recur(cur, s, b, used):
     if cur == N:
-        if cnt != 0:
+        if used:
             global res
-            res = min(res, abs(S_mul - B_sum))
+            res = min(res, abs(s - b))
         return
 
-    recur(cur+1, S_mul*ings[cur][0], B_sum + ings[cur][1], cnt+1)
-    recur(cur+1, S_mul, B_sum, cnt)
+    recur(cur+1, s*ls[cur][0], b+ls[cur][1], True)
+    recur(cur+1, s, b, used)
 
-recur(0, 1, 0, 0)
+recur(0, 1, 0, False)
 print(res)
