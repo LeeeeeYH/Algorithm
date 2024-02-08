@@ -2,31 +2,33 @@ import sys
 input = sys.stdin.readline
 
 N = int(input())
-min_nut = list(map(int, input().split()))
-ings = [list(map(int, input().split())) for _ in range(N)]
-res = []
-min_price = 7501
+m_ing = list(map(int, input().split()))
+ls = [list(map(int, input().split())) for _ in range(N)]
+res, res_selected = 7501, []
 
-def recur(cur, sum, check):
+def recur(cur, ing, flag):
     if cur == N:
         for i in range(4):
-            if sum[i] < min_nut[i]:
+            if m_ing[i] > ing[i]:
                 break
         else:
-            global res, min_price
-            if min_price > sum[4]:
-                min_price = sum[4]
-                res = [[i+1 for i in range(N) if check & 1<<i]]
-            elif min_price == sum[4]:
-                res += [[i+1 for i in range(N) if check & 1<<i]]
+            global res, res_selected
+            if res > ing[4]:
+                res = ing[4]
+                res_selected = [[i+1 for i in range(N) if flag & 1<<i]]
+            elif res == ing[4]:
+                res_selected += [[i+1 for i in range(N) if flag & 1<<i]]
         return
 
-    recur(cur+1, [sum[i]+ings[cur][i] for i in range(5)], check | 1<<cur)
-    recur(cur+1, sum, check)
+    next_ing = [0]*5
+    for i in range(5):
+        next_ing[i] = ing[i] + ls[cur][i]
+    recur(cur + 1, next_ing, flag | 1<<cur)
+    recur(cur+1, ing, flag)
 
 recur(0, [0]*5, 0)
-if min_price == 7501:
+if res == 7501:
     print(-1)
 else:
-    print(min_price)
-    print(*(sorted(res)[0]))
+    print(res)
+    print(*sorted(res_selected)[0])
