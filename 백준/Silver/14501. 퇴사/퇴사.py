@@ -1,7 +1,6 @@
 # DP로 변경
 
 import sys
-sys.setrecursionlimit(10000000)
 input = sys.stdin.readline
 
 N = int(input())
