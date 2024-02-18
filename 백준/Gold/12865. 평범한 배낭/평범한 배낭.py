@@ -1,32 +1,19 @@
-# 평범한 배낭
-# 백트래킹, 탑다운
-
-# N, K = map(int, input().split())
-# WV = [list(map(int, input().split())) for _ in range(N)]
-# dp = [[-1, 0] for _ in range(N + 4)]
-#
-# def recur(idx, sum):
-#     if sum > K: return -100000000000000000
-#     if idx == N: return 0
-#
-#     value = max(WV[idx][1] + recur(idx+1, sum+WV[idx][0]), recur(idx+1, sum))
-#     return value
-#
-# print(recur(0, 0))
-
-# 바텀업
+import sys
+sys.setrecursionlimit(10000000)
+input = sys.stdin.readline
 
 N, K = map(int, input().split())
-WV = [list(map(int, input().split())) for _ in range(N)]
-dp = [[-1]*101004 for _ in range(N)]
+ls = [list(map(int, input().split())) for _ in range(N)]
+dp = [[-1]*(K+1) for _ in range(N)]
 
+def recur(cur, summ):
+    if summ > K:
+        return -100_000_001
+    if cur == N:
+        return 0
 
-def recur(idx, sum):
-    if sum > K: return -100000000000000000
-    if idx == N: return 0
-
-    if dp[idx][sum] == -1:
-        dp[idx][sum] = max(WV[idx][1] + recur(idx+1, sum+WV[idx][0]), recur(idx+1, sum))
-    return dp[idx][sum]
+    if dp[cur][summ] == -1:
+        dp[cur][summ] = max(recur(cur+1, summ + ls[cur][0]) + ls[cur][1], recur(cur+1, summ))
+    return dp[cur][summ]
 
 print(recur(0, 0))
