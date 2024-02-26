@@ -1,51 +1,47 @@
-# import sys
-# input = sys.stdin.readline
+# input = __import__('sys').stdin.readline
 #
-# ls = list(map(int, input().split()))
+# b = list(map(int, input().split()))
+# ls = [list(map(int, input().split())) for _ in range(5)]
 #
-# def recur(a, b):
-#     if a < 0 or b < 0: # 잘못하는 방법이 하나라도 있으면?
+# def recur(x, y):
+#     if x < 0 or y < 0:
 #         return True
-#     if a == 0 and b == 0: # 이기면?
+#     if x == 0 and y == 0:
 #         return False
 #
 #     ret = False
-#     for i in ls: # 한번이라도 False가 있다면(이기는 방법이 있다면)
-#         ret |= not recur(a - i, b)
-#         ret |= not recur(a, b - i)
+#     for i in b:
+#         if not recur(x - i, y) or not recur(x, y - i):
+#             ret = True
+#             break
 #
 #     return ret
 #
-# for _ in range(5):
-#     k1, k2 = map(int, input().split())
-#     print('A' if recur(k1, k2) else 'B')
-
-
-# 백트를 dp로
+# for x, y in ls:
+#     print('BA'[recur(x, y)])
 
 import sys
+sys.setrecursionlimit(10_000_000)
 input = sys.stdin.readline
-sys.setrecursionlimit(10**7)
 
-ls = list(map(int, input().split()))
-dp = [[False]*501 for _ in range(501)]
-check = [[False]*501 for _ in range(501)]
+b = list(map(int, input().split()))
+ls = [list(map(int, input().split())) for _ in range(5)]
+dp = [[-1]*501 for _ in range(501)]
 
-
-def recur(a, b):
-    if a < 0 or b < 0: # 잘못하는 방법이 하나라도 있으면?
+def recur(x, y):
+    if x < 0 or y < 0:
         return True
-    if a == 0 and b == 0: # 이기면?
+    if x == 0 and y == 0:
         return False
 
-    if not check[a][b]:
-        check[a][b] = True
-        for i in ls: # 한번이라도 False가 있다면(이기는 방법이 있다면)
-            dp[a][b] |= not recur(a - i, b)
-            dp[a][b] |= not recur(a, b - i)
+    if dp[x][y] == -1:
+        dp[x][y] = False
+        for i in b:
+            if not recur(x - i, y) or not recur(x, y - i):
+                dp[x][y] = True
+                break
 
-    return dp[a][b]
+    return dp[x][y]
 
-for _ in range(5):
-    k1, k2 = map(int, input().split())
-    print('A' if recur(k1, k2) else 'B')
+for x, y in ls:
+    print('BA'[recur(x, y)])
