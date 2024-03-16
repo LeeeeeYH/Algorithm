@@ -1,3 +1,4 @@
+from collections import deque
 input = __import__('sys').stdin.readline
 
 dirs = [[-1,0],[0,1],[1,0],[0,-1]]
@@ -9,10 +10,11 @@ for _ in range(M):
 check = [False]*(N+1)
 
 res = []
-q = [[X, 0]]
+q = deque()
+q.append([X, 0])
 check[X] = True
 while q:
-    cur, w = q.pop(0)
+    cur, w = q.popleft()
     if w == K:
         res.append(cur)
         continue
