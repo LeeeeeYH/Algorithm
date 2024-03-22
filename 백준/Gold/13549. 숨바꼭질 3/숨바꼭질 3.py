@@ -1,7 +1,6 @@
 from collections import deque
 input = __import__('sys').stdin.readline
 
-dirs = [[-1,0],[0,1],[1,0],[0,-1]]
 N, K = map(int, input().split())
 MAX = 100_000
 check = [False]*(MAX+1)
@@ -16,7 +15,7 @@ while q:
 
     if cur*2 <= MAX and not check[cur*2]:
         check[cur*2] = True
-        q.append([cur*2, cnt])
+        q.appendleft([cur*2, cnt])
     if cur > 0 and not check[cur-1]:
         check[cur-1] = True
         q.append([cur-1, cnt+1])
