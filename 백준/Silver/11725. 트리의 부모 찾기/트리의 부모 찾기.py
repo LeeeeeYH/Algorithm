@@ -1,22 +1,20 @@
 import sys
-sys.setrecursionlimit(10**7)
+sys.setrecursionlimit(10_000_000)
 input = sys.stdin.readline
 
 N = int(input())
-tree = [[] for _ in range(N+1)]
-
+edges = [[] for _ in range(N+1)]
 for _ in range(N-1):
     a, b = map(int, input().split())
-    tree[a].append(b)
-    tree[b].append(a)
+    edges[a].append(b)
+    edges[b].append(a)
+parent = [0]*(N+1)
 
-parents = [0] * (N+1)
-def recur(cur, parent):
-    for child in tree[cur]:
-        if child != parent:
-            parents[child] = cur
+def recur(cur, prev):
+    for child in edges[cur]:
+        if child != prev:
+            parent[child] = cur
             recur(child, cur)
 
-recur(1, 0)
-for i in parents[2:]:
-    print(i)
+recur(1, -1)
+print(*parent[2:], sep='\n')
