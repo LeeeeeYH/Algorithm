@@ -27,11 +27,11 @@ while q:
                 q.append([nxt, leng + 1])
 
 # 다익스트라
-q = [[1, 0]]
+q = [[0, 1]]
 dis = [INF]*(N+1)
 dis[1] = 0
 while q:
-    cur, w = heappop(q)
+    w, cur = heappop(q)
     if cur == N:
         print(w-pq[cities[cur]])
         break
@@ -44,4 +44,4 @@ while q:
             dw = w + pq[cities[nxt]]
             if dis[nxt] > dw:
                 dis[nxt] = dw
-                heappush(q, [nxt, dw])
+                heappush(q, [dw, nxt])
