@@ -1,0 +1,1 @@
+print("Leading the Way to the Future" if int(__import__('sys').stdin.readline())== 1 else "YONSEI")
